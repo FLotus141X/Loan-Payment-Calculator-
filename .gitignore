@@ -1,32 +1,68 @@
-# Prerequisites
-*.d
+//  This program compares the monthly payment for several different home
+//  loans and figures out monthly interest, and over life of loan tallies
+//  how much is paid off over life of loan versus the principal borrowed
+//  to see how much was paid extra.
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <locale>
+using namespace std;
 
-# Precompiled Headers
-*.gch
-*.pch
+int main()
+{
+    const int One = 1,
+              Hundred = 100,
+              NumberofMonths = 12;
+    double YearlyInt;               // Yearly interest rate
+    double MonthlyInt;              // Interest Rate Monthly
+    double LoanAmount;              // Amount of loan
+    int Period;                     // Term of loan
+    double Payment;                 // Monthly payment
+    double AmountPaid;              // Total amount being paid back
+    double InterestPaid;            //
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+    
+    
+    // Program main
+    cout << "This program calculates the monthly payment, " <<
+            "total amount paid back, and the total interest paid." << endl;
+    cout << endl;
+    
+    // Get values from user
+    cout << "Please enter the principal of the loan: ";
+    cin >> LoanAmount;
+    cin.ignore(99, '\n');
+    cout << "Please enter annual iterest rate: ";
+    cin >> YearlyInt;
+    cin.ignore(99, '\n');
+    cout << "Please enter the term of the loan in years: ";
+    cin >> Period;
+    cin.ignore(99, '\n');
+    
+    // Calculations
+    MonthlyInt = (YearlyInt / 100.0) / 12;
+    
+    Payment = LoanAmount * pow(YearlyInt, Period) * (YearlyInt -1) /
+    (pow(YearlyInt, Period) - 1);
+    
+    Period *= NumberofMonths;
+    
+    AmountPaid = Payment * NumberofMonths;
+    
+    InterestPaid = AmountPaid - LoanAmount;
+    
+    // Display
+    cout.imbue(locale("en_US"));
+    cout << setprecision(2) << fixed << right << endl;
+    
+    cout << "Loan Amount:           $" << setw(10) << LoanAmount << endl;
+    cout << "Annual Interest Rate:  " << setw(10) << YearlyInt << '%' << endl;
+    cout << "Number of Payments:     " << setw(10) << Period << endl;
+    cout << "Monthly Payment:       $" << setw(10) << Payment << endl;
+    cout << "Amount Paid Back:      $" << setw(10) << AmountPaid << endl;
+    cout << "Interest Paid:         $" << setw(10) << InterestPaid << endl << endl;
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+    
+    return 0;
+}
